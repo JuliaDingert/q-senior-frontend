@@ -1,0 +1,14 @@
+<mat-form-field class="filter-margin" appearance="fill">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (change)="sendSearchValue()"
+  />
+  <!-- 
+    (change) schickt Value erst, wenn man Enter drückt
+    (onKeyUp) würde nach jedem Tastenschlag feuern
+    -> unterschiedlicher Traffic
+  -->
+</mat-form-field>

@@ -1,0 +1,20 @@
+<app-input-filter
+  (enteredSearchValue)="onSearchValueAdded($event)"
+  [placeholder]="filter[0]"
+  [label]="filter[0]"
+></app-input-filter>
+
+<app-multiselect-filter
+  (selectedSearchValues)="onSearchValueAdded($event)"
+  [label]="filter[1]"
+></app-multiselect-filter>
+
+<app-multiselect-filter
+  (selectedSearchValues)="onSearchValueAdded($event)"
+  [label]="filter[2]"
+></app-multiselect-filter>
+
+<app-checkbox-filter
+  label="is private"
+  (clickedCheckbox)="onSearchValueAdded($event)"
+></app-checkbox-filter>
