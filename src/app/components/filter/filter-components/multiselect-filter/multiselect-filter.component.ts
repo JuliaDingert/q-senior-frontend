@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { FilterDef } from 'src/app/models/filterDef';
 import { SecurityService } from 'src/app/services/security.service';
 import { FilterValue } from '../../filter-bar/filter-bar.component';
 
@@ -16,10 +17,9 @@ import { FilterValue } from '../../filter-bar/filter-bar.component';
   styleUrls: ['./multiselect-filter.component.scss'],
 })
 export class MultiselectFilterComponent implements OnInit, OnChanges {
-  @Input() label: string = '';
-  @Input() jsonAttributeName: string = '';
-  @Output() multiselectEvent = new EventEmitter<FilterValue>();
+  @Input() filterDef: FilterDef;
   @Input() isResetted: boolean;
+  @Output() multiselectEvent = new EventEmitter<FilterValue>();
 
   values: string[] = [];
   selectedValues = new FormControl('');
@@ -27,7 +27,7 @@ export class MultiselectFilterComponent implements OnInit, OnChanges {
   constructor(private securityService: SecurityService) {}
 
   ngOnInit(): void {
-    this.getValuesForMultiselect(this.jsonAttributeName);
+    this.getValuesForMultiselect(this.filterDef.jsonAttributeName);
   }
 
   ngOnChanges(): void {
@@ -36,6 +36,10 @@ export class MultiselectFilterComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Get values for multiselect by given key
+   * @param key
+   */
   getValuesForMultiselect(key: string) {
     this.values = this.securityService.getSecurityMultiselectValuesByKey(key);
   }
@@ -45,7 +49,7 @@ export class MultiselectFilterComponent implements OnInit, OnChanges {
    */
   selectValue() {
     this.multiselectEvent.emit({
-      name: this.label,
+      name: this.filterDef.filterAttributeName,
       value: this.selectedValues.value,
     });
   }

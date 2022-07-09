@@ -22,10 +22,25 @@ export class SecuritiesListComponent implements OnInit {
   private securitiesFilter: SecuritiesFilter = {};
 
   public securitiesFilterDef: FilterDef[] = [
-    { label: 'Name', type: 'input', placeholder: 'Start typing...' },
-    { label: 'Type', type: 'multiselect', jsonAttributeName: 'type' },
-    { label: 'Currencies', type: 'multiselect', jsonAttributeName: 'currency' },
-    { label: 'Is private', type: 'checkbox' },
+    {
+      label: 'Name',
+      type: 'input',
+      placeholder: 'Start typing...',
+      filterAttributeName: 'name',
+    },
+    {
+      label: 'Type',
+      type: 'multiselect',
+      filterAttributeName: 'types',
+      jsonAttributeName: 'type',
+    },
+    {
+      label: 'Currencies',
+      type: 'multiselect',
+      filterAttributeName: 'currencies',
+      jsonAttributeName: 'currency',
+    },
+    { label: 'Is private', type: 'checkbox', filterAttributeName: 'isPrivate' },
   ];
 
   constructor(private securityService: SecurityService) {}
@@ -39,40 +54,10 @@ export class SecuritiesListComponent implements OnInit {
    * @param eventData filter data from filter bar event emitter
    */
   fillSecuritiesFilter(eventData: FilterValue) {
-    switch (eventData.name) {
-      case 'Name': {
-        if (eventData.value.length >= 1) {
-          this.securitiesFilter.name = eventData.value;
-        } else {
-          this.securitiesFilter.name = undefined;
-        }
-
-        break;
-      }
-      case 'Type': {
-        if (eventData.value.length >= 1) {
-          this.securitiesFilter.types = eventData.value;
-        } else {
-          this.securitiesFilter.types = null;
-        }
-
-        break;
-      }
-      case 'Currencies': {
-        if (eventData.value.length >= 1) {
-          this.securitiesFilter.currencies = eventData.value;
-        } else {
-          this.securitiesFilter.currencies = null;
-        }
-        break;
-      }
-      case 'Is private': {
-        this.securitiesFilter.isPrivate = eventData.value;
-        break;
-      }
-      default: {
-        break;
-      }
+    if (eventData.value.length >= 1) {
+      this.securitiesFilter[eventData.name] = eventData.value;
+    } else {
+      this.securitiesFilter[eventData.name] = undefined;
     }
     this.refreshTable();
   }

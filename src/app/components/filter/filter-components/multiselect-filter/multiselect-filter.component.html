@@ -1,5 +1,5 @@
 <mat-form-field appearance="fill" class="filter-margin">
-  <mat-label>{{ label }}</mat-label>
+  <mat-label>{{ filterDef.label }}</mat-label>
   <mat-select [formControl]="selectedValues" multiple>
     <mat-select-trigger>
       {{selectedValues.value?.[0] || ''}}

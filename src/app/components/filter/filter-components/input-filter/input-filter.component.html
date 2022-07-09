@@ -1,8 +1,8 @@
 <mat-form-field class="filter-margin" appearance="fill">
-  <mat-label>{{ label }}</mat-label>
+  <mat-label>{{ filterDef.label }}</mat-label>
   <input
     matInput
-    [placeholder]="placeholder"
+    [placeholder]="filterDef.placeholder"
     [(ngModel)]="value"
     (change)="sendSearchValue()"
   />

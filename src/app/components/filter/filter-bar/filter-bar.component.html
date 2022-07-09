@@ -5,22 +5,20 @@
         <app-input-filter
           *ngSwitchCase="'input'"
           (inputEvent)="onSearchValueAdded($event)"
-          [placeholder]="filter.placeholder"
-          [label]="filter.label"
+          [filterDef]="filter"
           [isResetted]="resetFilterButtonClicked"
         ></app-input-filter>
 
         <app-multiselect-filter
           *ngSwitchCase="'multiselect'"
           (multiselectEvent)="onSearchValueAdded($event)"
-          [label]="filter.label"
-          [jsonAttributeName]="filter.jsonAttributeName"
+          [filterDef]="filter"
           [isResetted]="resetFilterButtonClicked"
         ></app-multiselect-filter>
 
         <app-checkbox-filter
           *ngSwitchCase="'checkbox'"
-          [label]="filter.label"
+          [filterDef]="filter"
           (checkboxEvent)="onSearchValueAdded($event)"
           [isResetted]="resetFilterButtonClicked"
         ></app-checkbox-filter></div

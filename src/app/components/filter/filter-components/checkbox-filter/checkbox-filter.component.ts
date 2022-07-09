@@ -5,6 +5,7 @@ import {
   OnChanges,
   Output,
 } from '@angular/core';
+import { FilterDef } from 'src/app/models/filterDef';
 import { FilterValue } from '../../filter-bar/filter-bar.component';
 
 @Component({
@@ -13,9 +14,9 @@ import { FilterValue } from '../../filter-bar/filter-bar.component';
   styleUrls: ['./checkbox-filter.component.scss'],
 })
 export class CheckboxFilterComponent implements OnChanges {
-  @Input() label: string;
-  @Output() checkboxEvent = new EventEmitter<FilterValue>();
+  @Input() filterDef: FilterDef;
   @Input() isResetted: boolean;
+  @Output() checkboxEvent = new EventEmitter<FilterValue>();
 
   checked: boolean = false;
 
@@ -31,6 +32,9 @@ export class CheckboxFilterComponent implements OnChanges {
    */
   clickCheckbox(value) {
     this.checked = value;
-    this.checkboxEvent.emit({ name: this.label, value: this.checked });
+    this.checkboxEvent.emit({
+      name: this.filterDef.filterAttributeName,
+      value: this.checked,
+    });
   }
 }

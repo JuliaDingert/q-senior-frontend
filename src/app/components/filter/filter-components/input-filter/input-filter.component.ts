@@ -5,6 +5,7 @@ import {
   OnChanges,
   Output,
 } from '@angular/core';
+import { FilterDef } from 'src/app/models/filterDef';
 import { FilterValue } from '../../filter-bar/filter-bar.component';
 
 @Component({
@@ -13,10 +14,9 @@ import { FilterValue } from '../../filter-bar/filter-bar.component';
   styleUrls: ['./input-filter.component.scss'],
 })
 export class InputFilterComponent implements OnChanges {
-  @Input() placeholder: string;
-  @Input() label: string;
-  @Output() inputEvent = new EventEmitter<FilterValue>();
+  @Input() filterDef: FilterDef;
   @Input() isResetted: boolean;
+  @Output() inputEvent = new EventEmitter<FilterValue>();
 
   value: string = '';
 
@@ -29,6 +29,9 @@ export class InputFilterComponent implements OnChanges {
    * Sends input value via eventemitter to parent
    */
   sendSearchValue(): void {
-    this.inputEvent.emit({ name: this.label, value: this.value });
+    this.inputEvent.emit({
+      name: this.filterDef.filterAttributeName,
+      value: this.value,
+    });
   }
 }
