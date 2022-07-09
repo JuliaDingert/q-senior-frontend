@@ -41,15 +41,29 @@ export class SecuritiesListComponent implements OnInit {
   fillSecuritiesFilter(eventData: FilterValue) {
     switch (eventData.name) {
       case 'Name': {
-        this.securitiesFilter.name = eventData.value;
+        if (eventData.value.length >= 1) {
+          this.securitiesFilter.name = eventData.value;
+        } else {
+          this.securitiesFilter.name = undefined;
+        }
+
         break;
       }
       case 'Type': {
-        this.securitiesFilter.types = eventData.value;
+        if (eventData.value.length >= 1) {
+          this.securitiesFilter.types = eventData.value;
+        } else {
+          this.securitiesFilter.types = null;
+        }
+
         break;
       }
       case 'Currencies': {
-        this.securitiesFilter.currencies = eventData.value;
+        if (eventData.value.length >= 1) {
+          this.securitiesFilter.currencies = eventData.value;
+        } else {
+          this.securitiesFilter.currencies = null;
+        }
         break;
       }
       case 'Is private': {
@@ -59,6 +73,17 @@ export class SecuritiesListComponent implements OnInit {
       default: {
         break;
       }
+    }
+    this.refreshTable();
+  }
+
+  /**
+   * Resets filter
+   * @param eventData
+   */
+  resetFilter(eventData: boolean) {
+    if (eventData) {
+      this.securitiesFilter = {};
     }
     this.refreshTable();
   }

@@ -40,7 +40,8 @@ export class FilterableTableComponent<T> implements AfterContentInit {
   @Input() dataSource: readonly T[] | DataSource<T> | Observable<readonly T[]>;
   @Input() isLoading: boolean;
 
-  @Output() filterValues = new EventEmitter<FilterValue>();
+  @Output() filterValueEvent = new EventEmitter<FilterValue>();
+  @Output() resetFilterEvent = new EventEmitter<boolean>();
 
   ngAfterContentInit() {
     this.columnDefs.forEach((columnDef) => this.table.addColumnDef(columnDef));
@@ -56,6 +57,14 @@ export class FilterableTableComponent<T> implements AfterContentInit {
    * @param event
    */
   getValues(event) {
-    this.filterValues.emit(event);
+    this.filterValueEvent.emit(event);
+  }
+
+  /**
+   * Triggers parent to reset filter
+   * @param event
+   */
+  resetFilter(event) {
+    this.resetFilterEvent.emit(event);
   }
 }

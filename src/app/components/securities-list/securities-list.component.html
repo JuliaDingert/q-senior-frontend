@@ -4,7 +4,8 @@
   [isLoading]="loadingSecurities$ | async"
   [columns]="displayedColumns"
   [filterDef]="securitiesFilterDef"
-  (filterValues)="fillSecuritiesFilter($event)"
+  (filterValueEvent)="fillSecuritiesFilter($event)"
+  (resetFilterEvent)="resetFilter($event)"
 >
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>

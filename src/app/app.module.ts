@@ -18,6 +18,7 @@ import { CheckboxFilterComponent } from './components/filter/filter-components/c
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatCheckboxModule,
     MatGridListModule,
     MatPaginatorModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

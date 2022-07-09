@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
 import { FilterValue } from '../../filter-bar/filter-bar.component';
 
 @Component({
@@ -6,11 +12,18 @@ import { FilterValue } from '../../filter-bar/filter-bar.component';
   templateUrl: './checkbox-filter.component.html',
   styleUrls: ['./checkbox-filter.component.scss'],
 })
-export class CheckboxFilterComponent {
+export class CheckboxFilterComponent implements OnChanges {
   @Input() label: string;
-  @Output() clickedCheckbox = new EventEmitter<FilterValue>();
+  @Output() checkboxEvent = new EventEmitter<FilterValue>();
+  @Input() isResetted: boolean;
 
   checked: boolean = false;
+
+  ngOnChanges(): void {
+    if (this.isResetted) {
+      this.checked = null;
+    }
+  }
 
   /**
    * Sends checkbox state via eventEmitter to parent
@@ -18,6 +31,6 @@ export class CheckboxFilterComponent {
    */
   clickCheckbox(value) {
     this.checked = value;
-    this.clickedCheckbox.emit({ name: this.label, value: this.checked });
+    this.checkboxEvent.emit({ name: this.label, value: this.checked });
   }
 }

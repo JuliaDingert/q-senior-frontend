@@ -1,6 +1,7 @@
 ﻿<app-filter-bar
   [filterDef]="filterDef"
-  (filterValue)="getValues($event)"
+  (filterValueEvent)="getValues($event)"
+  (resetFilterEvent)="resetFilter($event)"
 ></app-filter-bar>
 
 <div class="table-wrapper">

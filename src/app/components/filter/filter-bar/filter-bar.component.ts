@@ -8,14 +8,25 @@ import { FilterDef } from 'src/app/models/filterDef';
 })
 export class FilterBarComponent {
   @Input() filterDef: FilterDef[] = [];
-  @Output() filterValue = new EventEmitter<FilterValue>();
+  @Output() filterValueEvent = new EventEmitter<FilterValue>();
+  @Output() resetFilterEvent = new EventEmitter<boolean>();
+
+  resetFilterButtonClicked: boolean = false;
 
   /**
    * Sends search values from children to parent
    * @param eventData
    */
   onSearchValueAdded(eventData: any) {
-    this.filterValue.emit(eventData);
+    this.filterValueEvent.emit(eventData);
+  }
+
+  /**
+   * triggers parent to reset filter
+   */
+  resetFilter() {
+    this.resetFilterButtonClicked = !this.resetFilterButtonClicked;
+    this.resetFilterEvent.emit(this.resetFilterButtonClicked);
   }
 }
 
