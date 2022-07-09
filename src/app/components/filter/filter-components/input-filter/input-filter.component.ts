@@ -25,6 +25,7 @@ export class InputFilterComponent implements OnChanges {
       this.value = '';
     }
   }
+
   /**
    * Sends input value via eventemitter to parent
    */

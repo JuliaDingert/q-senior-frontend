@@ -55,4 +55,15 @@ export class SecurityService {
   getSecurityMultiselectValuesByKey(key: string): string[] {
     return this.generalService.getGroupNames(SECURITIES, key);
   }
+
+  /**
+   * Get length of securities list by given filter
+   * @param securityFilter
+   * @returns length
+   */
+  getSecuritiesLength(securityFilter?: SecuritiesFilter): Observable<number> {
+    const filteredSecurities = this.filterSecurities(securityFilter);
+
+    return of(filteredSecurities.length).pipe(delay(1000));
+  }
 }

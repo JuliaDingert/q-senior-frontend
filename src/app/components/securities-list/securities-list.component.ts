@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Security } from '../../models/security';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { indicate } from '../../utils';
@@ -6,6 +6,7 @@ import { SecurityService } from '../../services/security.service';
 import { SecuritiesFilter } from 'src/app/models/securitiesFilter';
 import { FilterDef } from 'src/app/models/filterDef';
 import { FilterValue } from '../filter/filter-bar/filter-bar.component';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'securities-list',
@@ -14,13 +15,6 @@ import { FilterValue } from '../filter/filter-bar/filter-bar.component';
 })
 export class SecuritiesListComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'type', 'currency'];
-
-  public securities$: Observable<Security[]>;
-  public loadingSecurities$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
-
-  private securitiesFilter: SecuritiesFilter = {};
-
   public securitiesFilterDef: FilterDef[] = [
     {
       label: 'Name',
@@ -42,6 +36,20 @@ export class SecuritiesListComponent implements OnInit {
     },
     { label: 'Is private', type: 'checkbox', filterAttributeName: 'isPrivate' },
   ];
+
+  // for pagination
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  public pageSizeOptions = [5, 10, 25, 50];
+  public securitiesLength$: Observable<number>;
+
+  private securitiesFilter: SecuritiesFilter = {
+    skip: 0,
+    limit: this.pageSizeOptions[1],
+  };
+
+  public securities$: Observable<Security[]>;
+  public loadingSecurities$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(private securityService: SecurityService) {}
 
@@ -68,7 +76,7 @@ export class SecuritiesListComponent implements OnInit {
    */
   resetFilter(eventData: boolean) {
     if (eventData) {
-      this.securitiesFilter = {};
+      this.securitiesFilter = { skip: 0, limit: this.pageSizeOptions[1] };
     }
     this.refreshTable();
   }
@@ -80,5 +88,22 @@ export class SecuritiesListComponent implements OnInit {
     this.securities$ = this.securityService
       .getSecurities(this.securitiesFilter)
       .pipe(indicate(this.loadingSecurities$));
+
+    this.securitiesLength$ = this.securityService.getSecuritiesLength(
+      this.securitiesFilter
+    );
+  }
+
+  /**
+   * Shows correct data by current paginator
+   * @param e
+   */
+  onPageChanged(e: PageEvent) {
+    this.securitiesFilter = {
+      ...this.securitiesFilter,
+      skip: e.pageIndex * e.pageSize,
+      limit: e.pageIndex * e.pageSize + e.pageSize,
+    };
+    this.refreshTable();
   }
 }

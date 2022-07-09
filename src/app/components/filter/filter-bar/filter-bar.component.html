@@ -1,7 +1,7 @@
 <mat-grid-list cols="4" rowHeight="6em">
   <div *ngFor="let filter of filterDef">
-    <mat-grid-tile
-      ><div [ngSwitch]="filter.type">
+    <mat-grid-tile>
+      <div [ngSwitch]="filter.type">
         <app-input-filter
           *ngSwitchCase="'input'"
           (inputEvent)="onSearchValueAdded($event)"
@@ -21,8 +21,11 @@
           [filterDef]="filter"
           (checkboxEvent)="onSearchValueAdded($event)"
           [isResetted]="resetFilterButtonClicked"
-        ></app-checkbox-filter></div
-    ></mat-grid-tile>
+        ></app-checkbox-filter>
+
+        <!--more filter options, eg date picker, ... -->
+      </div>
+    </mat-grid-tile>
   </div>
 </mat-grid-list>
 <div>
