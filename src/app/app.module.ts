@@ -16,6 +16,8 @@ import { MultiselectFilterComponent } from './components/filter/filter-component
 import { MatSelectModule } from '@angular/material/select';
 import { CheckboxFilterComponent } from './components/filter/filter-components/checkbox-filter/checkbox-filter.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     ReactiveFormsModule,
     MatCheckboxModule,
+    MatGridListModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

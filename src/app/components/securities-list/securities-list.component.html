@@ -3,6 +3,8 @@
   [dataSource]="securities$ | async"
   [isLoading]="loadingSecurities$ | async"
   [columns]="displayedColumns"
+  [filterDef]="securitiesFilterDef"
+  (filterValues)="fillSecuritiesFilter($event)"
 >
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>

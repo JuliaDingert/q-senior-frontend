@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { SecurityService } from 'src/app/services/security.service';
+import { FilterValue } from '../../filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-multiselect-filter',
@@ -8,27 +9,30 @@ import { SecurityService } from 'src/app/services/security.service';
   styleUrls: ['./multiselect-filter.component.scss'],
 })
 export class MultiselectFilterComponent implements OnInit {
-  @Input() label: string;
-  @Output() selectedSearchValues = new EventEmitter<string[]>();
+  @Input() label: string = '';
+  @Input() jsonAttributeName: string = '';
+  @Output() selectedSearchValues = new EventEmitter<FilterValue>();
 
   values: string[] = [];
   selectedValues = new FormControl('');
-  multiselectForm = new FormGroup({ selectedValues: this.selectedValues });
 
   constructor(private securityService: SecurityService) {}
 
   ngOnInit(): void {
-    this.getValuesForMultiselect(this.label);
+    this.getValuesForMultiselect(this.jsonAttributeName);
   }
 
   getValuesForMultiselect(key: string) {
-    this.values = this.securityService.getGroupNames(key);
+    this.values = this.securityService.getSecurityMultiselectValuesByKey(key);
   }
 
   /**
    * Sends selected values via eventEmitter to parent
    */
   selectValue() {
-    this.selectedSearchValues.emit(this.selectedValues.value);
+    this.selectedSearchValues.emit({
+      name: this.label,
+      value: this.selectedValues.value,
+    });
   }
 }

@@ -3,7 +3,9 @@ import {
   Component,
   ContentChild,
   ContentChildren,
+  EventEmitter,
   Input,
+  Output,
   QueryList,
   ViewChild,
 } from '@angular/core';
@@ -16,6 +18,8 @@ import {
   MatTable,
 } from '@angular/material/table';
 import { Observable } from 'rxjs';
+import { FilterDef } from 'src/app/models/filterDef';
+import { FilterValue } from '../filter/filter-bar/filter-bar.component';
 
 @Component({
   selector: 'filterable-table',
@@ -31,9 +35,12 @@ export class FilterableTableComponent<T> implements AfterContentInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<T>;
 
   @Input() columns: string[];
+  @Input() filterDef: FilterDef[];
 
   @Input() dataSource: readonly T[] | DataSource<T> | Observable<readonly T[]>;
   @Input() isLoading: boolean;
+
+  @Output() filterValues = new EventEmitter<FilterValue>();
 
   ngAfterContentInit() {
     this.columnDefs.forEach((columnDef) => this.table.addColumnDef(columnDef));
@@ -42,5 +49,13 @@ export class FilterableTableComponent<T> implements AfterContentInit {
       this.table.addHeaderRowDef(headerRowDef)
     );
     this.table.setNoDataRow(this.noDataRow);
+  }
+
+  /**
+   * Get filter values from children and sends values vie event emitter to parent
+   * @param event
+   */
+  getValues(event) {
+    this.filterValues.emit(event);
   }
 }

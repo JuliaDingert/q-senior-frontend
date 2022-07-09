@@ -1,18 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FilterValue } from '../../filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-checkbox-filter',
   templateUrl: './checkbox-filter.component.html',
   styleUrls: ['./checkbox-filter.component.scss'],
 })
-export class CheckboxFilterComponent implements OnInit {
+export class CheckboxFilterComponent {
   @Input() label: string;
-  @Output() clickedCheckbox = new EventEmitter<boolean>();
+  @Output() clickedCheckbox = new EventEmitter<FilterValue>();
+
   checked: boolean = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   /**
    * Sends checkbox state via eventEmitter to parent
@@ -20,6 +18,6 @@ export class CheckboxFilterComponent implements OnInit {
    */
   clickCheckbox(value) {
     this.checked = value;
-    this.clickedCheckbox.emit(this.checked);
+    this.clickedCheckbox.emit({ name: this.label, value: this.checked });
   }
 }

@@ -1,4 +1,7 @@
-﻿<app-filter-bar [filter]="columns"></app-filter-bar>
+﻿<app-filter-bar
+  [filterDef]="filterDef"
+  (filterValue)="getValues($event)"
+></app-filter-bar>
 
 <div class="table-wrapper">
   <div class="loading-indicator" *ngIf="isLoading">

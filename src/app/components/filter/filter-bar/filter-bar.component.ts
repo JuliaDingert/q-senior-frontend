@@ -1,18 +1,25 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FilterDef } from 'src/app/models/filterDef';
 
 @Component({
   selector: 'app-filter-bar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.scss'],
 })
-export class FilterBarComponent implements OnInit {
-  @Input() filter: string[] = [];
+export class FilterBarComponent {
+  @Input() filterDef: FilterDef[] = [];
+  @Output() filterValue = new EventEmitter<FilterValue>();
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
+  /**
+   * Sends search values from children to parent
+   * @param eventData
+   */
   onSearchValueAdded(eventData: any) {
-    console.log(eventData);
+    this.filterValue.emit(eventData);
   }
+}
+
+export interface FilterValue {
+  name: string;
+  value: any;
 }
