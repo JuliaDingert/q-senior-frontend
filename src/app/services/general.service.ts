@@ -12,7 +12,7 @@ export class GeneralService {
    * @param key
    * @returns map of array grouped by a key
    */
-  groupBy<T, K extends keyof T>(array: T[], key: K) {
+  private groupBy<T, K extends keyof T>(array: T[], key: K) {
     let map = new Map<T[K], T[]>();
     array.forEach((item) => {
       let itemKey = item[key];

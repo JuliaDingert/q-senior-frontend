@@ -28,7 +28,7 @@ export class SecurityService {
   /**
    * Filters securities
    * @param securityFilter
-   * @returns filtred securities
+   * @returns filtered securities
    */
   private filterSecurities(securityFilter: SecuritiesFilter) {
     if (!securityFilter) return SECURITIES;

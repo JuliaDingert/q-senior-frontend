@@ -5,8 +5,8 @@
 >
   <mat-label>{{ filterDef.label }}</mat-label>
   <mat-select [formControlName]="filterDef.filterAttributeName" multiple>
-    <mat-option *ngFor="let value of muliselectValues" [value]="value">{{
-      value
-    }}</mat-option>
+    <mat-option *ngFor="let value of multiSelectValues" [value]="value">
+      {{ value }}
+    </mat-option>
   </mat-select>
 </mat-form-field>

@@ -9,6 +9,7 @@ import { FilterDef } from 'src/app/models/filterDef';
 })
 export class FilterBarComponent implements OnInit {
   @Input() filterDef: FilterDef[] = [];
+
   @Output() filterValueEvent = new EventEmitter<any>();
   @Output() resetFilterEvent = new EventEmitter<boolean>();
 
@@ -21,7 +22,7 @@ export class FilterBarComponent implements OnInit {
   }
 
   /**
-   * Builds form group by given filterdef
+   * Builds form group by given filterDef
    * @param filterDef
    */
   private setFilterFormControls(filterDef: FilterDef[]): void {
@@ -48,21 +49,21 @@ export class FilterBarComponent implements OnInit {
       }
     });
 
-    this.onChanges();
+    this.onFilterDataChanges();
   }
 
   /**
    * Prepares the filter data for correct processing and emits filter data to parent
    */
-  private onChanges() {
+  private onFilterDataChanges() {
     this.filterForm.valueChanges.subscribe(() => {
       if (this.filterForm.invalid) {
         return;
       }
-      var result = this.filterForm.value;
+      let result = this.filterForm.value;
 
       for (let prop in result) {
-        const value = result[prop];
+        let value = result[prop];
         //If the input is empty, the filter value is set to null to ensure correct filtering.
         if (typeof value === 'string' && value.trim() === '') {
           result[prop] = null;

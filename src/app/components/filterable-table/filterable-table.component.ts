@@ -52,7 +52,7 @@ export class FilterableTableComponent<T> implements AfterContentInit {
   }
 
   /**
-   * Get filter values from children and sends values via event emitter to parent
+   * Get filter values from child and sends values via event emitter to parent
    * @param event
    */
   getValues(event) {

@@ -12,20 +12,20 @@ export class MultiselectFilterComponent implements OnInit {
   @Input() filterDef: FilterDef;
   @Input() parentForm: FormGroup;
 
-  muliselectValues: string[] = [];
+  multiSelectValues: string[] = [];
 
   constructor(private securityService: SecurityService) {}
 
   ngOnInit(): void {
-    this.getValuesForMultiselect(this.filterDef.jsonAttributeName);
+    this.getValuesForMultiSelect(this.filterDef.jsonAttributeName);
   }
 
   /**
    * Get values for multiselect by given key
    * @param key
    */
-  getValuesForMultiselect(key: string) {
-    this.muliselectValues =
+  getValuesForMultiSelect(key: string) {
+    this.multiSelectValues =
       this.securityService.getSecurityMultiselectValuesByKey(key);
   }
 }
