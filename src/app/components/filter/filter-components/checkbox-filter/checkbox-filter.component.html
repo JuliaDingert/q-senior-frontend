@@ -1,6 +1,7 @@
-<mat-checkbox
-  class="filter-margin"
-  (change)="clickCheckbox($event.checked)"
-  [checked]="checked"
-  >{{ filterDef.label }}
-</mat-checkbox>
+<div [formGroup]="parentForm">
+  <mat-checkbox
+    class="filter-margin"
+    [formControlName]="filterDef.filterAttributeName"
+    >{{ filterDef.label }}
+  </mat-checkbox>
+</div>

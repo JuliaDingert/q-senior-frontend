@@ -1,32 +1,31 @@
 <mat-grid-list cols="4" rowHeight="6em">
-  <div *ngFor="let filter of filterDef">
-    <mat-grid-tile>
-      <div [ngSwitch]="filter.type">
-        <app-input-filter
-          *ngSwitchCase="'input'"
-          (inputEvent)="onSearchValueAdded($event)"
-          [filterDef]="filter"
-          [isResetted]="resetFilterButtonClicked"
-        ></app-input-filter>
+  <form [formGroup]="filterForm">
+    <div *ngFor="let filter of filterDef">
+      <mat-grid-tile>
+        <div [ngSwitch]="filter.type">
+          <app-input-filter
+            *ngSwitchCase="'input'"
+            [filterDef]="filter"
+            [parentForm]="filterForm"
+          ></app-input-filter>
 
-        <app-multiselect-filter
-          *ngSwitchCase="'multiselect'"
-          (multiselectEvent)="onSearchValueAdded($event)"
-          [filterDef]="filter"
-          [isResetted]="resetFilterButtonClicked"
-        ></app-multiselect-filter>
+          <app-multiselect-filter
+            *ngSwitchCase="'multiselect'"
+            [filterDef]="filter"
+            [parentForm]="filterForm"
+          ></app-multiselect-filter>
 
-        <app-checkbox-filter
-          *ngSwitchCase="'checkbox'"
-          [filterDef]="filter"
-          (checkboxEvent)="onSearchValueAdded($event)"
-          [isResetted]="resetFilterButtonClicked"
-        ></app-checkbox-filter>
+          <app-checkbox-filter
+            *ngSwitchCase="'checkbox'"
+            [filterDef]="filter"
+            [parentForm]="filterForm"
+          ></app-checkbox-filter>
 
-        <!--more filter options, eg date picker, ... -->
-      </div>
-    </mat-grid-tile>
-  </div>
+          <!--more filter options, eg date picker, ... -->
+        </div>
+      </mat-grid-tile>
+    </div>
+  </form>
 </mat-grid-list>
 <div>
   <button mat-button (click)="resetFilter()" class="reset-button" color="warn">

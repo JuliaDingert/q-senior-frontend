@@ -42,7 +42,7 @@ export class SecurityService {
           securityFilter.currencies.some(
             (currency) => s.currency == currency
           )) &&
-        (securityFilter.isPrivate === undefined ||
+        (securityFilter.isPrivate == undefined ||
           securityFilter.isPrivate === s.isPrivate)
     );
   }

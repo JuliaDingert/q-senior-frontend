@@ -5,7 +5,6 @@ import { indicate } from '../../utils';
 import { SecurityService } from '../../services/security.service';
 import { SecuritiesFilter } from 'src/app/models/securitiesFilter';
 import { FilterDef } from 'src/app/models/filterDef';
-import { FilterValue } from '../filter/filter-bar/filter-bar.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -40,8 +39,10 @@ export class SecuritiesListComponent implements OnInit {
   // for pagination
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   public pageSizeOptions = [5, 10, 25, 50];
+  private currentPageSizeOption: number = this.pageSizeOptions[1];
   public securitiesLength$: Observable<number>;
 
+  // initial filter with pagination
   private securitiesFilter: SecuritiesFilter = {
     skip: 0,
     limit: this.pageSizeOptions[1],
@@ -61,12 +62,8 @@ export class SecuritiesListComponent implements OnInit {
    * Fills securitiesFilter and triggers the data refresh
    * @param eventData filter data from filter bar event emitter
    */
-  fillSecuritiesFilter(eventData: FilterValue) {
-    if (eventData.value.length >= 1) {
-      this.securitiesFilter[eventData.name] = eventData.value;
-    } else {
-      this.securitiesFilter[eventData.name] = undefined;
-    }
+  fillSecuritiesFilter(eventData) {
+    this.securitiesFilter = { ...this.securitiesFilter, ...eventData };
     this.refreshTable();
   }
 
@@ -76,7 +73,7 @@ export class SecuritiesListComponent implements OnInit {
    */
   resetFilter(eventData: boolean) {
     if (eventData) {
-      this.securitiesFilter = { skip: 0, limit: this.pageSizeOptions[1] };
+      this.securitiesFilter = { skip: 0, limit: this.currentPageSizeOption };
     }
     this.refreshTable();
   }
@@ -99,6 +96,7 @@ export class SecuritiesListComponent implements OnInit {
    * @param e
    */
   onPageChanged(e: PageEvent) {
+    this.currentPageSizeOption = e.pageSize;
     this.securitiesFilter = {
       ...this.securitiesFilter,
       skip: e.pageIndex * e.pageSize,

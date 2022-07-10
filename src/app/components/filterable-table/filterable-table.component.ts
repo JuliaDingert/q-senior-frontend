@@ -19,7 +19,6 @@ import {
 } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { FilterDef } from 'src/app/models/filterDef';
-import { FilterValue } from '../filter/filter-bar/filter-bar.component';
 
 @Component({
   selector: 'filterable-table',
@@ -40,7 +39,7 @@ export class FilterableTableComponent<T> implements AfterContentInit {
   @Input() dataSource: readonly T[] | DataSource<T> | Observable<readonly T[]>;
   @Input() isLoading: boolean;
 
-  @Output() filterValueEvent = new EventEmitter<FilterValue>();
+  @Output() filterValueEvent = new EventEmitter<any>();
   @Output() resetFilterEvent = new EventEmitter<boolean>();
 
   ngAfterContentInit() {
